@@ -29,6 +29,8 @@ function criaCalculadora() {
                     this.calculaConta();
                 }
 
+                this.display.focus();
+
             }.bind(this));
         },
         preencheDisplay(valor) {
