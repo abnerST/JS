@@ -1,41 +1,55 @@
-
 function criaCalculadora() {
-    
     return {
-
         display: document.querySelector(".display"),
-
-
-        inicia(){
-
-
-                this.cliqueBotoes();
-
-
+        inicia() {
+            this.cliqueBotoes();
+            this.enter();
         },
-
-        cliqueBotoes(){
-            document.addEventListener("click",function(e){
+        enter() {
+            document.addEventListener("keyup", e => {
+                if (e.key === "Enter") {
+                    this.calculaConta();
+                }
+            });
+        },
+        cliqueBotoes() {
+            document.addEventListener("click", function (e) {
                 const el = e.target;
-                if(el.classList.contains("btn-num")){
+                const classList = el.classList;
+                if (classList.contains("btn-num")) {
                     this.preencheDisplay(el.innerText);
                 }
+                if (classList.contains("btn-clear")) {
+                    this.clearDisplay();
+                }
+                if (classList.contains("btn-del")) {
+                    this.apagaUm();
+                }
+                if (classList.contains("btn-eq")) {
+                    this.calculaConta();
+                }
+
             }.bind(this));
-
         },
-
-
-        preencheDisplay(valor){
+        preencheDisplay(valor) {
             this.display.value += valor;
         },
-    
-
-
-
-
+        clearDisplay() {
+            this.display.value = "";
+        },
+        apagaUm() {
+            this.display.value = this.display.value.slice(0, -1);
+        },
+        calculaConta() {
+            let conta = this.display.value;
+            try {
+                conta = eval(conta);
+                this.display.value = (typeof conta === "undefined" ? "0" : conta);
+            } catch (e) {
+                alert("Não é possível calcular a expressão informada!");
+            }
+        }
     }
-
-
 }
 
 
